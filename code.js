@@ -306,7 +306,7 @@ function importUnit (e) {
   // name & memo
   memoElement.value = (unitdata.data.name ? unitdata.data.name : '') + (unitdata.data.memo ? `\n${unitdata.data.memo}` : '');
   memoElement.rows = memoElement.value.split('\n').length;
-  namePreviewElement.value = unitdata.data.name;
+  namePreviewElement.innerText = unitdata.data.name;
 
   // color
   if (unitdata.data.color) {
