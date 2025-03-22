@@ -1,0 +1,408 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700");
+@import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300..700");
+
+
+:root {
+  accent-color : seagreen;
+  --accent1 : moccasin;
+  --accent2 : seagreen;
+  --basic-font : 'Quicksand','Zen Kaku Gothic New';
+}
+
+body {
+  margin:0;
+  font-family: var(--basic-font);
+}
+
+#root {
+  background-color: #fafafa;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow-y: scroll;
+}
+
+.main-content {
+  padding: 2.5rem;
+  padding-block-end: 1.5rem;
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+}
+
+header {
+  padding: 0.25rem 12.5%;
+  color: #999;
+  background-color: #ddd;
+}
+
+footer {
+  color: gray;
+  background-color: #eee;
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 1rem;
+  margin:0;
+
+  p {
+    margin: 0;
+    font-weight: unset;
+  }
+  
+  ul {
+    padding-inline-start: 2.5ch;
+    margin-block: 0.5rem 1rem;
+
+    li:not(:first-child) {
+      margin-block-start: 0.25rem;
+    }
+  }
+}
+
+h1 {
+  font-size:1.25rem;
+  margin-block: 0.25rem;
+}
+
+h2 {
+  margin-block-start: 0;
+}
+
+p {
+  margin-block: 0.5rem;
+  font-weight: 500;
+}
+
+pre {
+  font-family: var(--basic-font);
+  margin-block: 0.5rem;
+}
+
+textarea {
+  font-family: 'Zen Kaku Gothic New';
+  resize: vertical;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  min-height: 1rem;
+}
+
+summary {
+  font-weight: 500;
+}
+
+button {
+  font-family: var(--basic-font);
+}
+
+hr {
+  margin-block: 1.5rem;
+}
+
+.main-content {
+  li:not(:first-child) {
+    margin-block-start: 0.5em;
+  }
+  
+  ol {
+    padding-inline-start: 2ch;
+    margin-block: 0.5rem;
+    
+    li::marker {
+      color: seagreen;
+      font-weight: 600;
+    }
+  }
+  
+  ul {
+    padding-inline-start: 1ch;
+    margin-block: 0.5rem;
+    
+    li {
+      padding-inline-start: 0.5ch;
+
+      &.ok::marker {
+        content:'✓';
+        color: seagreen;
+        font-weight: 600;
+      }
+      &.ng::marker {
+        content:'✕';
+        color: rgb(205, 16, 35);
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+input[type="text"] {
+  border: 1px solid gray;
+  border-radius: 0.25rem;
+  padding:0.25rem 0.5rem;
+}
+
+input[type="number"] {
+  width: 4ch;
+  background-color: transparent;
+  padding: 0.25rem;
+  border: 1px solid gray;
+  border-radius: 0.25rem;
+}
+
+input[type="color"] {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid gray;
+  border-radius: 0.25rem;
+}
+input[type="color"]::-webkit-color-swatch,
+input[type="color"]::-webkit-color-swatch-wrapper {
+  border: none;
+  padding: 0;
+}
+
+
+#exUnit {
+  color:#eee;
+  background-color: rgba(42, 99, 68, 0.9);
+}
+#exChat {
+  color:#eee;
+  background-color: rgba(108, 108, 108, 0.9);
+}
+
+
+span.title {
+  background-color: gray; 
+  color: #fafafa; 
+  font-weight: 500; 
+  padding-inline: 0.5ch;
+}
+
+.ccfoliaName {
+  font-family: 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
+  font-weight: bold;
+  color: #888;
+  background-color: #2a2a2a;
+  border-radius: 0.25rem;
+  border: none;
+  padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+  margin-inline-start: 0.5rem;
+  min-width: 12ch;
+  visibility: hidden;
+}
+input:focus + .ccfoliaName,
+input:focus + * + .ccfoliaName {
+  visibility: visible;
+}
+
+
+.buttonWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: fixed;
+  right: 5%;
+  bottom: 2rem;
+  z-index: 2;
+}
+
+button.export {
+  height: 6rem;
+  width: 6rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 50%;
+}
+
+details.square {
+  font-size: 0.875rem;
+  background-color: #ddd;
+  border-radius: 1.25rem;
+  padding: 0.5rem 1.25rem;
+
+  summary {
+    padding-block-end: 1px;
+    margin-block: 0.125rem;
+  }
+
+  &:not([open]) {
+    color: rgb(177, 118, 40);
+    background-color: var(--accent1);
+    border-radius: 5rem;
+  }
+}
+
+details:not(.square) summary::marker {
+  color: var(--accent2);
+}
+
+.explanation {
+  color:#eee;
+  background-color: rgba(42, 99, 68, 0.9);
+  font-size: small;
+  font-weight: 500;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.greenBold {
+  color: seagreen;
+  font-weight: 600;
+}
+
+.annotation {
+  color: rgba(0,0,0,0.6);
+  font-size: smaller;
+  text-align: end;
+  margin-block:0;
+}
+
+.footerTitle {
+  font-weight: 600;
+  font-size: larger;
+  margin-block: 0.25rem;
+}
+
+
+/* ------------------------------
+              Table
+------------------------------ */
+
+table {
+  border-spacing: 0 0.25rem;
+  font-size: small;
+  letter-spacing: 0.5px;
+}
+
+caption {
+  text-align: left;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin-block-end: 0.25rem;
+}
+
+th,td {
+  padding: 0.25rem;
+  font-weight: 500;
+}
+
+thead th {
+  color:white;
+  background-color: gray;
+  
+  &:first-child{
+    border-start-start-radius: 0.25rem;
+  }
+  &:last-child{
+    border-start-end-radius: 0.25rem;
+  }
+}
+
+tbody {
+  tr:nth-of-type(odd) > * {
+    background-color: #dfdfdf;
+  }
+  tr:nth-of-type(even) > * {
+    background-color: #eee;
+  }
+  
+  th {
+    border-inline-end: 3px dotted rgba(0,0,0,0.15);
+  }
+  
+  input[type='checkbox'] {
+    margin: 0;
+    margin-block-start: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+
+#addParamTable :is(th,td),
+#addStatTable  :is(th,td) {
+  height: 1rem;
+}
+
+#skillsTable th {
+  width: 4ch;
+}
+
+#chatTable tr > :nth-child(2) {
+  width: 1rem;
+}
+#chatTable thead th:last-child {
+  padding-inline: 8ch;
+}
+
+
+.valueTable {
+  margin-block-end: 1.25rem;
+  
+  th, td {
+    text-align: center;
+    width: 8ch;
+  }
+  
+  td:not(:first-child) {
+    width: 6ch;
+  }
+}
+
+
+.secretTable {
+  margin-inline-start: -1rem;
+  
+  caption {
+    margin-inline-start: 1rem;
+  }
+
+  thead tr > * {
+    &:nth-child(2) {
+      border-start-start-radius: 0.25rem;
+    }
+  }
+
+  tr > :first-child {
+    width:1rem;
+    background-color: transparent;
+    padding: 0;
+    visibility:collapse;
+
+    :hover > & {
+      visibility: visible;
+    }
+  }
+  
+  tr:has(> :first-child > input:checked) {
+    text-decoration: line-through;
+    color: rgba(0,0,0,0.33);
+  }
+}
+
+tr.insert > * {
+  border-block-start: 3px solid var(--accent2);
+
+  .secretTable &:first-child {
+    border-block-start: none;
+  }
+}
+
+.footerTable {
+  tr > * {
+    &:first-child {min-width: 10ch;}
+    &:nth-child(2){min-width: 10ch;}
+    &:last-child  {min-width: 30ch;}
+
+    thead & {border-block: 1px solid #aaa;}
+    tbody & {border-block-end: 1px solid #aaa;}
+
+    &:is(th,td) {
+      text-align: left;
+      font-weight: unset;
+      background-color: transparent;
+      color: unset;
+    }
+  }
+}

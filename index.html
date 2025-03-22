@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NPCコマ作成</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="account_circle_24dp_1F1F1F_FILL1_wght400_GRAD0_opsz24.svg" />
+  </head>
+
+  <body>
+    <div id="root">
+
+      <div class="main-content">
+
+        <!-- 左メニュー -->
+        <div style="padding-inline-end:2.5rem; display: flex; flex-direction: column; gap: 1.5rem; min-width: max-content;">
+          <div class="explanation">
+            <pre style="font-size: large; font-weight: 600; margin-block: 0;">
+NPCコマを作る労力を
+最小限にしたい！！！</pre>
+            <br>
+            チャパレも能力値もベタ打ちテキストから
+            <br>
+            一発で整形してくれ！！！
+            <br>
+            そんなツールです。
+          </div>
+          
+          <details class="square">
+            <summary>使い方</summary>
+            <ol>
+              <li>「入力」列の各項目を入力</li>
+              <li>右下のボタンをクリック</li>
+              <li>ココフォリアに貼り付け</li>
+            </ol>
+          </details>
+
+          <details class="square">
+            <summary>できること</summary>
+            <ul>
+              <li class="ok">
+                <span class="greenBold">チャパレ並び替え</span>
+                <br>
+                ドラッグ＆ドロップ
+              </li>
+              <li class="ok">
+                <span class="greenBold">シークレットダイス個別設定</span>
+                <br>
+                チャパレ欄の☑
+              </li>
+              <li class="ok">
+                <span class="greenBold">出力ON/OFF 個別設定</span>
+                <br>
+                (パラメータ,ステータス,チャパレ)
+                <br>
+                該当の欄をクリック
+              </li>
+              <li class="ok">
+                <span class="greenBold">技能名ON/OFF</span>
+                <br>
+                技能欄の該当の技能名をクリック
+              </li>
+              <!-- <li class="ok">
+                <span class="greenBold">発言色プレビュー</span>
+                <br>
+                カラーを設定している間のみ
+              </li> -->
+            </ul>
+          </details>
+
+          <details class="square">
+            <summary>入力欄の仕様</summary>
+            
+            <p style="font-size: smaller;">消す文字（正規表現）：</p>
+            <input type="text" id="delChar" value=" :…「」『』【】〈〉\[\]《》≪≫" style="width: -webkit-fill-available; font-family: 'Zen Kaku Gothic New';">
+            
+            <p style="margin-block-start: 1.25rem;"><span class="title">能力値</span></p>
+            <ul>
+              <li class="ok">途中改行</li>
+              <li class="ok">謎の半角/全角スペース</li>
+              <li class="ok">全角の記号/英数字</li>
+            </ul>
+
+            <p style="margin-block-start: 1.25rem;"><span class="title">技能・ダイス・choice</span></p>
+            <ul>
+              <li class="ng">途中改行</li>
+              <li class="ok">謎の半角/全角スペース</li>
+              <li class="ok">全角の記号/英数字</li>
+            </ul>
+            <p style="font-size: smaller; font-weight: unset;">※改行(\n)と%で行を区切っています</p>
+          </details>
+
+          <details class="square" style="background-color:#ddd;">
+            <summary style="color:#666;">Import CCFOLIA unit</summary>
+            <ul style="font-size: small;">
+              <li class="ng">ココフォリアからコピーした駒</li>
+              <li class="ok">
+                いあきゃら等で出力した
+                <br>
+                <span class="greenBold">「ココフォリア貼り付け前の」</span>駒
+              </li>
+            </ul>
+            <p style="margin-block-end: 0; color: #666;">貼り付け▼</p>
+            <textarea id="ccfoUnit" style="width: -webkit-fill-available;" rows="5"></textarea>
+          </details>
+
+        </div>
+        
+        <!-- 入力欄 -->
+        <div style="min-width: max-content;">
+          <h2>
+            入力
+            <span style="font-size: medium; color:#888">
+              <label style="margin-inline-start: 0.25rem;"><input type="radio" name="system" value=1 checked>CoC6th</label>
+              <label><input type="radio" name="system" value=0>7th</label>
+            </span>
+          </h2>
+
+          <!-- 選択式設定 -->
+          <div style="display: flex; column-gap: 2rem;">
+
+            <div style="display: grid;">
+              <p>ダイス</p>
+              <label><input type="radio" name="dice" value="CC">CC</label>
+              <label><input type="radio" name="dice" value="CCB" checked>CCB</label>
+              <label><input type="radio" name="dice" value="1d100">1d100</label>
+            </div>
+            
+            <div style="display: grid;">
+              <p>追加設定</p>
+              <label><input type="radio" name="dice2" value='' checked>通常</label>
+              <label><input type="radio" name="dice2" value='s'>シークレット</label>
+              <label><input type="radio" name="dice2" value='@'>CCB 【...】 @70</label>
+            </div>
+
+            <div style="display: flex;flex-direction: column;justify-content: flex-end;">
+              <label><input type="checkbox" id="sDice">ダイスを隠す</label>
+              <label><input type="checkbox" id="sChoice">choiceを隠す</label>
+            </div>
+
+          </div>
+
+          <hr>
+
+          <!-- 能力値 -->
+          <p>能力値</p>
+          <textarea id="stats" style="width: -webkit-fill-available; min-height: 3rem;" rows="3"></textarea>
+
+          <!-- 技能・ダイス・choice -->
+          <p style="margin-block-start: 1rem;">技能・ダイス・choice</p>
+          <textarea id="skills" style="width: -webkit-fill-available; min-height: 8rem;" rows="10"></textarea>
+          <p class="annotation">※半角スペースはアンダーバー(_)で代記</p>
+
+          <hr>
+
+          <!-- キャラコマ設定 -->
+          <details>
+            <summary>コマ設定</summary>
+
+            <div style="display: flex; margin-block: 1rem; gap:1rem;">
+              <p style="width: 5rem; font-weight: unset; margin:0;">
+                名前　　：メモ欄
+              </p>
+              <div>
+                <textarea id="memo" cols="30"></textarea>
+                <p class="annotation">※1行目が名前、2行目以降がメモ欄</p>
+              </div>
+            </div>
+
+            <div style="display: flex; margin-block: 1rem; gap:1rem;">
+              <p style="width: 5rem; font-weight: unset; margin:0;">差分　　：<span style="font-size: smaller;"> (ラベル)</span></p>
+              <div>
+                <textarea id="diff" cols="30"></textarea>
+                <p class="annotation">
+                  <label>
+                    <input type="checkbox" id="addDiff" style="margin:0;" checked>
+                    チャパレに追加
+                  </label>
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; margin-block: 1rem; align-items: center;">
+              駒サイズ：
+              <input type="range" id="unitSize" min="1" max="30" value="4" style="margin-inline: 1rem 0.5rem; width: 50%;">
+              <input type="number" min="1" value="4">
+            </div>
+
+            <div style="display: flex; margin-block: 1rem; align-items: center;">
+              発言色　：
+              <input type="color" id="color" style="margin-inline: 1rem 0.5rem;" value="#888888">
+              <input type="text" style="background-color: transparent; width:7ch; padding-block: 0.5rem;" placeholder="#888888">
+              <p class="ccfoliaName">探索者名</p>
+            </div>
+
+            <div style="display: flex; margin-block: 1rem; gap:1rem;">
+              駒設定　：
+              <div style="display: grid;">
+                <label><input type="checkbox" id="secret">ステ - 秘匿</label>
+                <label><input type="checkbox" id="hideStatus">一覧 - 非表示</label>
+                <label><input type="checkbox" id="invisible">発言 - 非表示</label>
+              </div>
+            </div>
+
+          </details>
+
+          <hr>
+
+          <!-- 追加パラメータ・ステータス -->
+          <details>
+            <summary>その他</summary>
+            <div style="display: flex; gap:1rem; margin-block-start:1rem; align-items: flex-start;">
+              <table id="addParamsTable" style="flex: 1;">
+                <caption>
+                  追加パラメータ
+                  <button id="addParam">追加</button>
+                </caption>
+                <thead>
+                  <tr>
+                    <th>ラベル</th>
+                    <th>値</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <table id="addStatsTable" style="flex: 1;">
+                <caption>
+                  追加ステータス
+                  <button id="addStat">追加</button>
+                </caption>
+                <thead>
+                  <tr>
+                    <th>ラベル</th>
+                    <th>現在値</th>
+                    <th>最大値</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+        </div>
+
+        <p style="display: flex; flex-direction: column; justify-content: center; color: #888;">
+          ▶
+        </p>
+
+        <!-- 出力欄 -->
+        <div style="min-width: max-content;">
+          <h2>出力</h2>
+          <div style="display: flex; gap: 2rem;">
+            <div>
+              <div style="display: flex; gap:1rem;">
+                <table id="paramsTable" class="valueTable secretTable">
+                  <caption>パラメータ</caption>
+                  <tbody>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <th>STR</th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <th>CON</th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <th>POW</th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <th>DEX</th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <th>APP</th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <th>SIZ</th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <th>INT</th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <th>EDU</th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <th>DB</th>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div>
+                  <table id="statsTable" class="valueTable secretTable">
+                    <caption>ステータス</caption>
+                    <tbody>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <th>HP</th>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <th>MP</th>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox"></td>
+                        <th>SAN</th>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+      
+                  <table id="elseTable" class="valueTable">
+                    <caption>他</caption>
+                    <tbody>
+                      <tr>
+                        <th>アイデア</th>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <th>幸運</th>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <th>知識</th>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <table id="skillTable" style="width: -webkit-fill-available;">
+                <caption>技能</caption>
+                <thead>
+                  <tr>
+                    <th>技能名</th>
+                    <th>技能値</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <div>
+              <table id="chatTable" class="secretTable">
+                <caption>チャパレ</caption>
+                <thead>
+                  <tr>
+                    <th>✕</th>
+                    <th>s</th>
+                    <th>chat palette</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            
+          </div>
+
+        </div>
+
+      </div>
+
+      <footer>
+        <div style="display: flex;gap:5rem; border-block-end: 1px solid #aaa;width: fit-content;justify-self: center;">
+          <div>
+            <p class="footerTitle">CONTACT</p>
+            <p style="font-size: larger;">セイル</p>
+            <p>Booth: https://seils.booth.pm/</p>
+            <p>X(旧Twitter): @seilor0</p>
+          </div>
+          <div>
+            <p class="footerTitle">CAUTION</p>
+            <ul>
+              <li>
+                作業環境：Windows11 / Google Chrome<br>
+                上記以外の環境はテストしていないため、不具合が出る可能性があります。
+              </li>
+              <li>
+                当サイトの利用によるいかなるトラブルも作者は責任を負いません。<br>ご利用は自己責任にてお願いいたします。
+              </li>
+              <li>
+                何かあれば左の連絡先までご連絡ください。
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p class="footerTitle">UPDATE</p>
+            <table class="footerTable">
+              <thead>
+                <tr>
+                  <th>date</th>
+                  <th>version</th>
+                  <th>detail</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2025.03.22</td>
+                  <td>1.0</td>
+                  <td>サイト公開</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <pre style="text-align: center;margin-block-end: unset;">
+当サイトは、「株式会社アークライト」及び「株式会社KADOKAWA」が権利を有する『クトゥルフ神話TRPG』シリーズの二次創作物です。
+Call of Cthulhu is copyright ©1981, 2015, 2019 by Chaosium Inc. ;all rights reserved. Arranged by Arclight Inc. Call of Cthulhu is a registered trademark of Chaosium Inc.
+PUBLISHED BY KADOKAWA CORPORATION 「クトゥルフ神話TRPG」「新クトゥルフ神話TRPG」</pre>
+      </footer>
+
+      <div class="buttonWrap">
+          <button id="exUnit" class="export">ココフォリア駒出力</button>
+          <button id="exChat" class="export">チャパレ出力</button>
+      </div>
+      
+    </div>
+    <script src="code.js"></script>
+  </body>
+</html>
